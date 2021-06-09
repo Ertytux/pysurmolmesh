@@ -6,7 +6,7 @@
 #
 #  -*- coding: utf8 -*-
 
-from openbabel import pybel
+import pybel
 import numpy as np
 from mendeleev import element
 
