@@ -54,66 +54,7 @@ class VesicleGenerator:
     def generator(self, rho):
         xyzpoints, bounds, faces, eps = getSpGen(
             self.atomlist, self.radiumlist, rho)
-        eps = optx.optimizeMesh2(self.df, xyzpoints)
-        trig = ConvexHull(xyzpoints)
-        xyzpoints2 = xyzpoints[trig.vertices]  # eliminate internals points
-        trig = ConvexHull(xyzpoints2)
-        bounds = []
-        # remake bounds
-        for tr in trig.simplices:
-            st1 = tr[0]
-            st2 = tr[1]
-            st3 = tr[2]
-            a1 = [min(st1, st2), max(st1, st2)]
-            a2 = [min(st2, st3), max(st2, st3)]
-            a3 = [min(st1, st3), max(st1, st3)]
-            bounds.append(a1)
-            bounds.append(a2)
-            bounds.append(a3)
-        # eliminate duplicate
-        bounds = set(tuple(i) for i in bounds)
-        # make iterable but  no modificable
-        bounds = np.array(tuple(bounds))
-
-        return xyzpoints2, bounds, trig.simplices, eps
-
-    def generator2(self, rho):
-        xyzpoints, bounds, faces, eps = getSpGen(
-            self.atomlist, self.radiumlist, rho)
-        eps = optx.optimizeMesh2(self.df, xyzpoints)  # Critic point TODO
-        trig = Delaunay(xyzpoints)
-        surfacepoint = []
-        for tr in trig.convex_hull:
-            st1 = tr[0]
-            st2 = tr[1]
-            st3 = tr[2]
-            surfacepoint.append(st1)
-            surfacepoint.append(st2)
-            surfacepoint.append(st3)
-        surfacepoint = np.array(tuple(set(i for i in surfacepoint)))
-        xyzpoints2 = xyzpoints[surfacepoint]
-        trig = Delaunay(xyzpoints2)
-        bounds = []
-        # remake bounds
-        for tr in trig.convex_hull:
-            st1 = tr[0]
-            st2 = tr[1]
-            st3 = tr[2]
-            a1 = [min(st1, st2), max(st1, st2)]
-            a2 = [min(st2, st3), max(st2, st3)]
-            a3 = [min(st1, st3), max(st1, st3)]
-            bounds.append(a1)
-            bounds.append(a2)
-            bounds.append(a3)
-        # eliminate duplicate
-        bounds = set(tuple(i) for i in bounds)
-        bounds = np.array(tuple(bounds))
-        return xyzpoints2, bounds, trig.convex_hull, eps
-
-    def generator3(self, rho):
-        xyzpoints, bounds, faces, eps = getSpGen(
-            self.atomlist, self.radiumlist, rho)
-        eps = optx.optimizeMesh2(self.df, xyzpoints)
+        eps = optx.optimizeMesh(self.df, xyzpoints, bounds)
         trig = Delaunay(xyzpoints)
         surfacepoint = []
         faces = []

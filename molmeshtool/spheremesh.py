@@ -68,7 +68,6 @@ def genSphereMesh(radius, rho, center=np.array([0.0, 0.0, 0.0])):
 
     # stabilize shape
     def df(p): return np.sqrt(((p - center) ** 2).sum(1)) - radius
-    eps = optimizeMesh1(df, xyzpoints, bounds)
-    eps = optimizeMesh2(df, xyzpoints)
-
+    eps = optimizeMesh(df, xyzpoints, bounds)
+    
     return xyzpoints, bounds, trig.simplices, eps
