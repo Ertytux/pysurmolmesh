@@ -8,7 +8,7 @@
 
 import vpython as vp
 import numpy as np
-from molmeshtool.numvpvector import NpAtoVv
+from pysurmolmesh.numvpvector import NpAtoVv
 
 ar = np.array([1.0])
 

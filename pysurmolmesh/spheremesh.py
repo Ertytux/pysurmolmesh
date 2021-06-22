@@ -6,9 +6,11 @@
 #
 #  -*- coding: utf8 -*-
 
-from scipy.spatial import ConvexHull
+
 import numpy as np
-from molmeshtool.optimizeMesh import optimizeMesh1, optimizeMesh2
+from scipy.spatial import ConvexHull
+from pysurmolmesh.optimizeMesh import optimizeMesh
+
 
 ant = 1.45
 
@@ -31,6 +33,7 @@ def genSphereMesh(radius, rho, center=np.array([0.0, 0.0, 0.0])):
     dr = 2.0 * radius * np.sin(sita / 2.0)
     # add stremes
     xyzpoints = [[0, 0, radius], [0, 0, -radius]]
+
     for sp in range(1, 2 * rho):
         sitap = sp * sita
         sn1 = np.sin(sitap)
@@ -66,9 +69,4 @@ def genSphereMesh(radius, rho, center=np.array([0.0, 0.0, 0.0])):
     # make iterable but  no modificable
     bounds = np.array(tuple(bounds))
 
-    # stabilize shape
-    def df(p): return np.sqrt(((p - center) ** 2).sum(1)) - radius
-    eps = optimizeMesh1(df, xyzpoints, bounds)
-    eps = optimizeMesh2(df, xyzpoints)
-
-    return xyzpoints, bounds, trig.simplices, eps
+    return xyzpoints, bounds, trig.simplices

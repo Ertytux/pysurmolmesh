@@ -6,7 +6,7 @@
 #
 #  -*- coding: utf8 -*-
 
-import pybel
+from openbabel import pybel
 import numpy as np
 from mendeleev import element
 
@@ -17,10 +17,8 @@ def loadPDB(filename):
     atomradi = []
     for molecule in str:
         for atom in molecule.atoms:
-            atomtypes.append(atom.type)
+            atomtypes.append(atom.atomicnum)
             atompos.append([atom.coords[0], atom.coords[1], atom.coords[2]])
-            #TODO
-            numx=0.95
+            numx=element(atom.atomicnum).atomic_radius_rahm/100
             atomradi.append(numx)
-            #END TODO
     return atomtypes, np.array(atompos), np.array(atomradi)

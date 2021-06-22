@@ -10,8 +10,8 @@ from setuptools import setup
 
 setup(
     name='pysurmolmesh',
-    version='0.0.1',
-    packages=['molmeshtool'],
+    version='0.0.2',
+    packages=['pysurmolmesh'],
     url='',
     license='GPLv2',
     author='Edisel Navas Conyedo',
